@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.funcs.SlewRateLimiter;
+import org.opencv.core.Mat;
 
 
 @Autonomous(name = "TestAuto", group = "Compcode")
@@ -31,16 +32,17 @@ public class testing extends LinearOpMode{
         //limelight.setPollRateHz(100); // This sets how often we ask Limelight for data (100 times per second)
         //limelight.start(); // This tells Limelight to start looking!
     waitForStart();
-        MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(0,0,0));
+        MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(0,0,Math.PI));
         Actions.runBlocking(
                 drive.actionBuilder(drive.localizer.getPose())
-                        .lineToX(10)
-                        .waitSeconds(5)
-                        .lineToX(0)
-                        .waitSeconds(5)
-                        .strafeTo(new Vector2d(0,10))
-                        .waitSeconds(5)
-                        .strafeTo(new Vector2d(0,0))
+                        .strafeToLinearHeading(new Vector2d(-30,0), Math.toRadians(270))
+                        .waitSeconds(3)
+                        .strafeToLinearHeading(new Vector2d(-30,-20),Math.toRadians(270))
+                        .waitSeconds(3)
+                        .strafeToLinearHeading(new Vector2d(-30,0),Math.toRadians(180))
+
+                        .waitSeconds(3)
+                        .strafeToLinearHeading(new Vector2d(-60,0),Math.toRadians(235))
 
 
                         .build());
